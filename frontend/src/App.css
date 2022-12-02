@@ -4,14 +4,5 @@
 }
 main{
   margin: 1rem;
-}
-.header {
-  padding: 1rem;
-  background-color: #404040;
-  color: white;
-}
-
-.header a{
-  text-decoration: none;
-  color: white;
+  flex: 1 ;
 }
