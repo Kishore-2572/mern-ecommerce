@@ -1,0 +1,59 @@
+import React, { useEffect, useReducer, useState } from 'react';
+import axios from 'axios';
+import logger from 'use-reducer-logger';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Product from '../components/product.js';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true };
+    case 'FETCH_SUCCESS':
+      return { ...state, products: action.payload, loading: false };
+    case 'FETCH_FAIL':
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+export default function HomeScreen() {
+  const [{ loading, error, products }, dispatch] = useReducer(logger(reducer), {
+    loading: true,
+    error: '',
+    products: [],
+  });
+  // const [products,setProducts]=useState([]);
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        dispatch({ type: 'FETCH_REQUEST' });
+        const result = await axios.get('/api/products');
+        // setProducts(result.data);
+        dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
+      } catch (err) {
+        dispatch({ type: 'FETCH_FAIL', payload: err.message });
+        console.log(err);
+      }
+    };
+    getProducts();
+  }, []);
+  return (
+    <div>
+      <h1>Featured Products</h1>
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>{error}</div>
+      ) : (
+        <Row className="products">
+          {products.map((product,index) => (
+            <Col key={index} sm={6} md={4} lg={3} className="mb-3">
+              <Product  product={product}/>
+            </Col>
+          ))}
+        </Row>
+      )}
+    </div>
+  );
+}
