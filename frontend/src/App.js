@@ -1,6 +1,6 @@
 import './App.css';
 
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomeScreen from './screens/homescreen.js';
 import ProductScreen from './screens/productscreen';
 import Navbar from 'react-bootstrap/Navbar';
@@ -22,7 +22,7 @@ function App() {
           {/* <Link to="/">Amazona</Link> */}
         </header>
         <main>
-          <Container>
+          <Container className='mt-3'>
             <Routes>
               <Route path="/" element={<HomeScreen />} />
               <Route path="/product/:slug" element={<ProductScreen />} />
