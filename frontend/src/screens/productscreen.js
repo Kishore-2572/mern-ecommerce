@@ -9,6 +9,9 @@ import Badge from 'react-bootstrap/esm/Badge';
 import Button from 'react-bootstrap/esm/Button';
 import Rating from '../components/rating';
 import { Helmet } from 'react-helmet-async';
+import LoadingBox from '../components/loadingBox.js';
+import MessageBox from '../components/messageBox.js';
+import {getError} from '../utils';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -39,7 +42,7 @@ export default function ProductScreen() {
         // setProducts(result.data);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: err.message });
+        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
         console.log(err);
       }
     };
@@ -47,9 +50,9 @@ export default function ProductScreen() {
   }, [slug]);
 
   return loading ? (
-    <div>Loading...</div>
+    <LoadingBox/>
   ) : error ? (
-    <div> {error}</div>
+    <MessageBox variant='danger'>{error}</MessageBox>
   ) : (
     <div>
       <Helmet>
