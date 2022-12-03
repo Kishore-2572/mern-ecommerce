@@ -43,3 +43,10 @@ body {
 .img-large{
   max-width: 100%;
 }
+
+.img-thumbnail{
+  height: 80px;
+}
+.route-link{
+  text-decoration: none;
+}
