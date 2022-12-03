@@ -1,37 +1,25 @@
-const express = require('express')
-const app = express()
-const dotenv=require('dotenv')
-const data=require('./data.js')
-dotenv.config()
+const express = require('express');
+const app = express();
+const dotenv = require('dotenv');
+const data = require('./data.js');
+const mongoose = require('mongoose');
+const seedRouter=require('./routes/seedRoutes')
+const productRoutes=require('./routes/productRoutes')
+dotenv.config();
 
-app.use(express.json())
-app.get('/', (req, res) =>{
-    res.send("Hello")
-})
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log('DB connected'))
+  .catch((err) => console.log(err));
 
-app.get('/api/products', (req, res) =>{
-    res.send(data.products)
-})
+app.use(express.json());
 
-app.get('/api/products/slug/:slug', (req, res) =>{
-    const product=data.products.find(x => x.slug===req.params.slug);
-    if(product){
-        res.send(product);
-    }else{
-        res.status(400).send({message:'Product not found'});
-    }
-    
-})
+app.use('/api/seed',seedRouter);
+app.use('/api/products',productRoutes);
 
-app.get('/api/products/:id', (req, res) =>{
-    const product=data.products.find(x => x._id===req.params.id);
-    if(product){
-        res.send(product);
-    }else{
-        res.status(400).send({message:'Product not found'});
-    }
-    
-})
 
-const port=process.env.PORT
-app.listen(port, () => console.log(`Backend is running at http://localhost:${port}`))
+
+const port = process.env.PORT;
+app.listen(port, () =>
+  console.log(`Backend is running at http://localhost:${port}`)
+);
