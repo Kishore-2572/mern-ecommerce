@@ -25,7 +25,7 @@ export default function PaymentScreen() {
   return (
     <div>
       <CheckOutSteps step1 step2 step3></CheckOutSteps>
-      <Helmet>Payment</Helmet>
+      <Helmet> <title>Payment</title> </Helmet>
       <h1 className='my-3'>Payment Method</h1>
       <Form onSubmit={submitHandler}>
         <div className='mb-3'>
