@@ -30,7 +30,7 @@ export default function ShippingScreen() {
   const submitHandler = (e) => {
     e.preventDefault();
     ctxDispatch({
-      type: 'SAVE_SHIPPIN_ADDRESS',
+      type: 'SAVE_SHIPPING_ADDRESS',
       payload: {
         fullName,
         address,
