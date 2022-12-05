@@ -44,7 +44,7 @@ export default function PlaceOrderScreen() {
   const placeOrderHandler = async () => {
     try{
         dispatch({type:"CREATE_REQUEST"});
-        const {data}=await axios.post('api/orders',{
+        const {data}=await axios.post('https://amazona-yblw.onrender.com/api/orders',{
             orderItems:cart.cartItems,
             shippingAddress:cart.shippingAddress,
             paymentMethod:cart.paymentMethod,

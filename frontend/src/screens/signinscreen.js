@@ -24,7 +24,7 @@ export default function SignInScreen() {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('/api/users/signin', {
+      const { data } = await axios.post('https://amazona-yblw.onrender.com/api/users/signin', {
         email,
         password,
       });

@@ -33,7 +33,8 @@ export default function HomeScreen() {
     const getProducts = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const result = await axios.get('/api/products');
+
+        const result = await axios.get('https://amazona-yblw.onrender.com/api/products');
         // setProducts(result.data);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (err) {
