@@ -40,7 +40,7 @@ export default function ProductScreen() {
     const getProducts = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const result = await axios.get(`https://amazona-yblw.onrender.com/api/products/slug/${slug}`);
+        const result = await axios.get(`https://amazona-api.onrender.com/api/products/slug/${slug}`);
         // setProducts(result.data);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (err) {
@@ -56,7 +56,7 @@ export default function ProductScreen() {
   const addToCartHandler =async ()=>{
     const existItem=cart.cartItems.find( x => x._id===product._id);
     const quantity=existItem ?existItem.quantity+1:1;
-    const response =await axios.get(`https://amazona-yblw.onrender.com/api/products/${product._id}`);
+    const response =await axios.get(`https://amazona-api.onrender.com/api/products/${product._id}`);
     if(response.data.countInStock<quantity){
       window.alert("Sorry. Product is out of stock");
       return;

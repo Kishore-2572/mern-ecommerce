@@ -30,7 +30,7 @@ export default function SignUpScreen() {
         return;
     }
     try {
-      const { data } = await axios.post('https://amazona-yblw.onrender.com/api/users/signup', {
+      const { data } = await axios.post('https://amazona-api.onrender.com/api/users/signup', {
         name,
         email,
         password,
