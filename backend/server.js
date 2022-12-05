@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const seedRouter=require('./routes/seedRoutes')
 const productRoutes=require('./routes/productRoutes')
 const userRoutes=require('./routes/userRoutes')
+const orderRoutes=require('./routes/orderRoutes')
 dotenv.config();
 
 mongoose
@@ -19,7 +20,7 @@ app.use(express.urlencoded({extended:true}))
 app.use('/api/seed',seedRouter);
 app.use('/api/products',productRoutes);
 app.use('/api/users',userRoutes);
-
+app.use('/api/orders',orderRoutes);
 
 app.use((err,req,res,next) => {
     res.status(500).send({message:err.message});
