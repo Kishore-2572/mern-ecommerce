@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import LoadingBox from '../components/loadingBox';
 import MessageBox from '../components/messageBox';
 import { Store } from '../Store';
@@ -60,7 +60,14 @@ export default function OrderHistoryScreen() {
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
-      ) : (
+      ) :
+        orders.length===0?(<MessageBox>
+            No previous Orders.{' '}
+            <Link to="/" className="route-link">
+              <strong>Go shopping</strong>
+            </Link>{' '}
+          </MessageBox>):
+       (
         <table className="table">
           <thead>
             <tr>
