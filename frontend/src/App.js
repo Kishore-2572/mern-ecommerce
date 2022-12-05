@@ -1,8 +1,8 @@
 import './App.css';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import {ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import HomeScreen from './screens/homescreen.js';
 import ProductScreen from './screens/productscreen';
 import Navbar from 'react-bootstrap/Navbar';
@@ -21,28 +21,28 @@ import SignUpScreen from './screens/signupscreen';
 import PaymentScreen from './screens/paymentscreen';
 import PlaceOrderScreen from './screens/placeorderscreen';
 import OrderScreen from './screens/orderscreen';
+import OrderHistoryScreen from './screens/orderhistoryscreen';
 
 function App() {
-  const { state,dispatch:ctxDispatch } = useContext(Store);
+  const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart, userInfo } = state;
-  const signoutHandler=()=>{
-    ctxDispatch({type:"USER_SIGNOUT"});
-    localStorage.removeItem("userInfo");
-    localStorage.removeItem("shippingAddress");
-    localStorage.removeItem("paymentMethod");
-  }
+  const signoutHandler = () => {
+    ctxDispatch({ type: 'USER_SIGNOUT' });
+    localStorage.removeItem('userInfo');
+    localStorage.removeItem('shippingAddress');
+    localStorage.removeItem('paymentMethod');
+  };
   return (
     <BrowserRouter>
-
       <div className="App d-flex flex-column site-container">
-        <ToastContainer position="bottom-center" limit={1} / >
+        <ToastContainer position="bottom-center" limit={1} />
         <header className="header">
-          <Navbar bg="dark" variant="dark">
+          <Navbar bg="dark" variant="dark" expand="lg">
             <Container>
               <LinkContainer to="/">
                 <Navbar.Brand>Amazona</Navbar.Brand>
               </LinkContainer>
-              <Nav className="me-auto">
+              {/* <Nav className="me-auto">
                 <Link to="/cart" className="nav-link">
                   cart
                   {cart.cartItems.length > 0 && (
@@ -71,13 +71,46 @@ function App() {
                 ) : (
                   <Link to="/signin" className="nav-link">
                     {' '}
-                    Sign In
+                    Sign In */}
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="me-auto  w-100  justify-content-end">
+                  <Link to="/cart" className="nav-link">
+                    Cart
+                    {cart.cartItems.length > 0 && (
+                      <Badge pill bg="danger">
+                        {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                      </Badge>
+                    )}
                   </Link>
-                )}
-              </Nav>
+                  {/* )}
+              </Nav> */}
+                  {userInfo ? (
+                    <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+                      <LinkContainer to="/profile">
+                        <NavDropdown.Item>User Profile</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/orderhistory">
+                        <NavDropdown.Item>Order History</NavDropdown.Item>
+                      </LinkContainer>
+                      <NavDropdown.Divider />
+                      <Link
+                        className="dropdown-item"
+                        to="#signout"
+                        onClick={signoutHandler}
+                      >
+                        Sign Out
+                      </Link>
+                    </NavDropdown>
+                  ) : (
+                    <Link className="nav-link" to="/signin">
+                      Sign In
+                    </Link>
+                  )}
+                </Nav>
+              </Navbar.Collapse>
             </Container>
           </Navbar>
-          {/* <Link to="/">Amazona</Link> */}
         </header>
         <main>
           <Container className="mt-3">
@@ -90,6 +123,7 @@ function App() {
               <Route path="/payment" element={<PaymentScreen />} />
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
               <Route path="/product/:slug" element={<ProductScreen />} />
+              <Route path="/orderhistory" element={<OrderHistoryScreen />} />
               <Route path="/order/:id" element={<OrderScreen />}></Route>
             </Routes>
           </Container>
