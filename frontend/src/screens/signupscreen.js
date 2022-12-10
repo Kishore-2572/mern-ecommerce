@@ -31,7 +31,7 @@ export default function SignUpScreen() {
       return;
     }
     try {
-      const { data } = await axios.post('/api/users/signup', {
+      const { data } = await axios.post('https://long-puce-peplum.cyclic.app/api/users/signup', {
         name,
         email,
         password,

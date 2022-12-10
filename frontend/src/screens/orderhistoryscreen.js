@@ -7,7 +7,6 @@ import MessageBox from '../components/messageBox';
 import { Store } from '../Store';
 import { getError } from '../utils';
 import Button from 'react-bootstrap/Button';
-import apilink from '../apilink';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -36,7 +35,7 @@ export default function OrderHistoryScreen() {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
         const { data } = await axios.get(
-           '/api/orders/mine',
+           'https://long-puce-peplum.cyclic.app/api/orders/mine',
 
           { headers: { authorization: `Bearer ${userInfo.token}` } }
         );
