@@ -33,7 +33,9 @@ export default function HomeScreen() {
     const getProducts = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const result = await axios.get('/api/products');
+        const result = await axios.get('https://long-puce-peplum.cyclic.app/api/products',{
+          
+        });
         console.log(result.data);
         // setProducts(result.data);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
