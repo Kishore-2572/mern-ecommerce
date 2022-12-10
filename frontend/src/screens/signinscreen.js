@@ -6,8 +6,9 @@ import Form from 'react-bootstrap/Form';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import { Store } from '../Store';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import { getError } from '../utils';
+import apilink from '../apilink';
 
 export default function SignInScreen() {
   const navigate = useNavigate();
@@ -19,12 +20,12 @@ export default function SignInScreen() {
   const [password, setPassword] = useState('');
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const {userInfo}=state;
+  const { userInfo } = state;
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('https://amazona-api.onrender.com/api/users/signin', {
+      const { data } = await axios.post('/api/users/signin', {
         email,
         password,
       });
@@ -36,11 +37,11 @@ export default function SignInScreen() {
     }
   };
 
-  useEffect( () => {
-    if(userInfo){
-        navigate(redirect);
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
     }
-  },[navigate,redirect,userInfo])
+  }, [navigate, redirect, userInfo]);
 
   return (
     <Container className="small-container">

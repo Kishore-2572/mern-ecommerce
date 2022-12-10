@@ -6,8 +6,9 @@ import Form from 'react-bootstrap/Form';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import { Store } from '../Store';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import { getError } from '../utils';
+import apilink from '../apilink';
 
 export default function SignUpScreen() {
   const navigate = useNavigate();
@@ -21,16 +22,16 @@ export default function SignUpScreen() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const {userInfo}=state;
+  const { userInfo } = state;
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    if(password!==confirmPassword){
-        toast.error("Passwords do not match");
-        return;
+    if (password !== confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
     }
     try {
-      const { data } = await axios.post('https://amazona-api.onrender.com/api/users/signup', {
+      const { data } = await axios.post('/api/users/signup', {
         name,
         email,
         password,
@@ -43,11 +44,11 @@ export default function SignUpScreen() {
     }
   };
 
-  useEffect( () => {
-    if(userInfo){
-        navigate(redirect);
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
     }
-  },[navigate,redirect,userInfo])
+  }, [navigate, redirect, userInfo]);
 
   return (
     <Container className="small-container">
@@ -56,7 +57,7 @@ export default function SignUpScreen() {
       </Helmet>
       <h1 className="my-3">SignUp</h1>
       <Form onSubmit={submitHandler}>
-      <Form.Group className="mb-3" controlId="name">
+        <Form.Group className="mb-3" controlId="name">
           <Form.Label>Name </Form.Label>
           <Form.Control
             type="text"
@@ -92,7 +93,7 @@ export default function SignUpScreen() {
           <Button type="submit">Sign Up</Button>
         </div>
         <div className="mb-3">
-         Already have an account?{'  '}
+          Already have an account?{'  '}
           <Link className="route-link" to={`/signin?redirect=${redirect}`}>
             Sign In{' '}
           </Link>

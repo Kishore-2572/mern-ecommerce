@@ -7,6 +7,7 @@ import Product from '../components/product.js';
 import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/loadingBox.js';
 import MessageBox from '../components/messageBox.js';
+import apilink from '../apilink.js';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -27,14 +28,13 @@ export default function HomeScreen() {
     products: [],
   });
   // const [products,setProducts]=useState([]);
- 
 
   useEffect(() => {
     const getProducts = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-
-        const result = await axios.get('https://amazona-api.onrender.com/api/products');
+        const result = await axios.get('/api/products');
+        console.log(result.data);
         // setProducts(result.data);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (err) {
@@ -51,9 +51,9 @@ export default function HomeScreen() {
       </Helmet>
       <h1>Featured Products</h1>
       {loading ? (
-        <LoadingBox/>
+        <LoadingBox />
       ) : error ? (
-        <MessageBox variant='danger'>{error}</MessageBox>
+        <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <Row className="products">
           {products.map((product, index) => (

@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { getError } from '../utils';
 import axios from 'axios';
 import LoadingBox from '../components/loadingBox';
+import apilink from '../apilink';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -42,28 +43,32 @@ export default function PlaceOrderScreen() {
   cart.taxPrice = round2(cart.itemsPrice * 0.15);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
   const placeOrderHandler = async () => {
-    try{
-        dispatch({type:"CREATE_REQUEST"});
-        const {data}=await axios.post('https://amazona-api.onrender.com/api/orders',{
-            orderItems:cart.cartItems,
-            shippingAddress:cart.shippingAddress,
-            paymentMethod:cart.paymentMethod,
-            itemsPrice:cart.itemsPrice,
-            shippingPrice:cart.shippingPrice,
-            taxPrice:cart.taxPrice,
-            totalPrice:cart.totalPrice
-        },{
-            headers:{
-                authorization:`Bearer ${userInfo.token}`
-            }
-        })
-        ctxDispatch({type:'CART_CLEAR'});
-        dispatch({type:"CREATE_SUCCESS"});
-        localStorage.removeItem('cartItems');
-        navigate(`/order/${data.order._id}`)
-    }catch(err){
-        dispatch({type:"CREATE_FAIL"});
-        toast.error(getError(err))
+    try {
+      dispatch({ type: 'CREATE_REQUEST' });
+      const { data } = await axios.post(
+        '/api/orders',
+        {
+          orderItems: cart.cartItems,
+          shippingAddress: cart.shippingAddress,
+          paymentMethod: cart.paymentMethod,
+          itemsPrice: cart.itemsPrice,
+          shippingPrice: cart.shippingPrice,
+          taxPrice: cart.taxPrice,
+          totalPrice: cart.totalPrice,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      ctxDispatch({ type: 'CART_CLEAR' });
+      dispatch({ type: 'CREATE_SUCCESS' });
+      localStorage.removeItem('cartItems');
+      navigate(`/order/${data.order._id}`);
+    } catch (err) {
+      dispatch({ type: 'CREATE_FAIL' });
+      toast.error(getError(err));
     }
   };
   useEffect(() => {

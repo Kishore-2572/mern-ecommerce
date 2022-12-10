@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
-import { useNavigate,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import LoadingBox from '../components/loadingBox';
 import MessageBox from '../components/messageBox';
 import { Store } from '../Store';
 import { getError } from '../utils';
 import Button from 'react-bootstrap/Button';
+import apilink from '../apilink';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -35,7 +36,7 @@ export default function OrderHistoryScreen() {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
         const { data } = await axios.get(
-          'https://amazona-api.onrender.com/api/orders/mine',
+           '/api/orders/mine',
 
           { headers: { authorization: `Bearer ${userInfo.token}` } }
         );
@@ -60,14 +61,14 @@ export default function OrderHistoryScreen() {
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
-      ) :
-        orders.length===0?(<MessageBox>
-            No previous Orders.{' '}
-            <Link to="/" className="route-link">
-              <strong>Go shopping</strong>
-            </Link>{' '}
-          </MessageBox>):
-       (
+      ) : orders.length === 0 ? (
+        <MessageBox>
+          No previous Orders.{' '}
+          <Link to="/" className="route-link">
+            <strong>Go shopping</strong>
+          </Link>{' '}
+        </MessageBox>
+      ) : (
         <table className="table">
           <thead>
             <tr>
