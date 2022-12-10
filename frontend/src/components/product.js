@@ -6,7 +6,7 @@ import Rating from './rating';
 import { Store } from '../Store';
 import axios from 'axios';
 
-export default function Product(props) {
+export default function Product(props) { 
   const { product } = props;
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {

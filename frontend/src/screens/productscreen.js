@@ -41,14 +41,14 @@ export default function ProductScreen() {
     const getProducts = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
-        const result = await axios.get(`/api/products/slug/${slug}`);
+        const result = await axios.get(`https://long-puce-peplum.cyclic.app/api/products/slug/${slug}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
         console.log(err);
       }
     };
-    getProducts();
+    getProducts(); 
   }, [slug]);
 
   const { state, dispatch: ctxDispatch } = useContext(Store);

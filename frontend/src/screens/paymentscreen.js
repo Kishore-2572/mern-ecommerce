@@ -17,7 +17,7 @@ export default function PaymentScreen() {
         }
     },[shippingAddress,navigate])
     const submitHandler=(e)=>{
-        e.preventDefault();
+        // e.preventDefault();
         ctxDispatch({typr:"SAVE_PAYMENT_METHOD",payload:paymentMethodName})
         localStorage.setItem('paymentMethod',paymentMethodName)
         navigate('/placeorder')
