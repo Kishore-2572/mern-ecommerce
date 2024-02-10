@@ -11,7 +11,7 @@ const generateToken = (user) => {
     },
     process.env.SECRET_KEY,
     { expiresIn: '30d' }
-  );
+  ); 
 };
 
 const isAuth = (req, res, next) => {
